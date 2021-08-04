@@ -31,6 +31,7 @@ library(plotly)
 library(ggrepel)
 library(hrbrthemes)
 library(rmapshaper)
+library(magrittr)
 gpclibPermit()
 #rsconnect::configureApp("ShinyApp", account = "ecsusan-vt-2020-shiny", size="xxlarge")
 
@@ -1648,7 +1649,8 @@ server <- function(input, output, session) {
       addLegend(pal = pal, values = c(0, max(M0, na.rm = TRUE)), opacity = 0.7, title = paste0("k = ", input$slider_91_MPI),
                 position = "bottomright") %>%
       htmlwidgets::prependContent(html_fix)
-  })
+  }) %>%
+    bindCache(input$slider_91_MPI, input$UrbRurSelection_MPI_91, input$SensitivitySelection_91)
   
   output$Dist_60_MPI_Map <- renderLeaflet({
     k_threshold = input$slider_60_MPI
